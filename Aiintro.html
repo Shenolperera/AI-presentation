@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI  - Shenol Perera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-color: #3b82f6;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link.active {
+            background-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .pro-tip {
+            border-left: 4px solid #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .ai-resource-link {
+            transition: all 0.3s ease;
+        }
+        .ai-resource-link:hover {
+            background: rgba(59, 130, 246, 0.15);
+            padding-left: 1rem;
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body class="selection:bg-blue-500/30 selection:text-blue-200">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-md text-white z-50 border-b border-slate-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <button id="menu-toggle" class="md:hidden text-xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="text-lg md:text-xl font-bold tracking-tight flex items-center">
+                    <i class="fas fa-microchip mr-2 text-blue-500"></i> 
+                    <span class="hidden sm:inline">AI </span>
+                    <span class="sm:hidden">AI & CYBER</span>
+                </h1>
+            </div>
+            
+            <div class="flex items-center gap-3 md:gap-6">
+                <!-- Language Selector -->
+                <div class="relative">
+                    <select id="langSelector" class="bg-slate-800 border border-slate-700 text-white text-xs md:text-sm rounded-xl focus:ring-2 focus:ring-blue-500 p-1.5 md:p-2 cursor-pointer outline-none appearance-none pr-8">
+                        <option value="si">සිංහල</option>
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
+                        <option value="fr">Français</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-[10px] pointer-events-none opacity-50"></i>
+                </div>
+                <span class="hidden lg:inline-block text-[10px] bg-blue-600/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full uppercase tracking-widest font-bold">Shenol Perera</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed md:sticky top-0 left-0 w-72 bg-slate-900 md:bg-transparent h-screen pt-24 border-r border-slate-800 p-6 z-40 -translate-x-full md:translate-x-0 transition-transform duration-300 overflow-y-auto">
+            <h3 class="font-bold text-slate-500 uppercase text-xs mb-6 tracking-widest" data-key="nav_title">පරිච්ඡේද</h3>
+            <nav class="space-y-1 mb-10">
+                <a href="#intro" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_intro"><i class="fas fa-book-open w-5 text-blue-400"></i> හැඳින්වීම</a>
+                <a href="#how-it-works" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_how"><i class="fas fa-brain w-5 text-purple-400"></i> ක්‍රියාකාරීත්වය</a>
+                <a href="#anthropic" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_anthropic"><i class="fas fa-shield-virus w-5 text-emerald-400"></i> Anthropic & Security</a>
+                <a href="#russia" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_russia"><i class="fas fa-map-marker-alt w-5 text-red-400"></i> AI in Russia</a>
+                <a href="#cybersecurity" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_cyber"><i class="fas fa-user-secret w-5 text-indigo-400"></i> Cybersecurity</a>
+                <a href="#prompting" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 sidebar-link text-slate-300" data-key="nav_prompt"><i class="fas fa-terminal w-5 text-amber-400"></i> Prompt Engineering</a>
+            </nav>
+
+            <!-- Famous AI Resources List -->
+            <div class="pt-6 border-t border-slate-800">
+                <h3 class="font-bold text-slate-500 uppercase text-[10px] mb-4 tracking-widest" data-key="ai_res_title">ප්‍රසිද්ධ AI මෙවලම්</h3>
+                <div class="flex flex-col gap-2">
+                    <a href="https://chatgpt.com" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-emerald-500"></i> ChatGPT (OpenAI)
+                    </a>
+                    <a href="https://claude.ai" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-amber-500"></i> Claude (Anthropic)
+                    </a>
+                    <a href="https://gemini.google.com" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-blue-500"></i> Gemini (Google)
+                    </a>
+                    <a href="https://www.perplexity.ai" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-teal-400"></i> Perplexity AI
+                    </a>
+                    <a href="https://copilot.microsoft.com" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-indigo-500"></i> MS Copilot
+                    </a>
+                    <a href="https://midjourney.com" target="_blank" class="ai-resource-link text-sm text-slate-400 flex items-center gap-2 py-1">
+                        <i class="fas fa-circle text-[6px] text-purple-500"></i> Midjourney
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 md:p-12 mt-16 max-w-5xl mx-auto w-full">
+            
+            <section id="intro" class="mb-16 md:mb-24 pt-4 md:pt-8">
+                <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-900 rounded-[2rem] p-8 md:p-16 text-white shadow-2xl shadow-blue-900/20">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                    <h2 class="text-3xl md:text-6xl font-extrabold mb-6 leading-tight" data-key="hero_title">කෘතිම බුද්ධිය (AI) යනු කුමක්ද?</h2>
+                    <p class="text-base md:text-xl opacity-90 leading-relaxed mb-8 max-w-2xl" data-key="hero_desc">
+                        AI යනු හුදෙක් පරිගණක වැඩසටහනක් නොව, මානුෂීය තර්කනය යන්ත්‍රයක් තුළ ප්‍රතිනිර්මාණය කිරීමේ විද්‍යාවයි. 
+                        සාම්ප්‍රදායික Programming වලදී අපි විධාන ලබා දෙන අතර, AI වලදී පද්ධතිය දත්ත ඇසුරෙන් තනිවම ඉගෙන ගනී.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-xl backdrop-blur-md text-sm font-medium">#Theory</span>
+                        <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-xl backdrop-blur-md text-sm font-medium">#Future</span>
+                        <span class="bg-blue-400 text-slate-900 px-4 py-2 rounded-xl text-sm font-bold">2024 Masterclass</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works" class="mb-20">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-10 w-2 bg-blue-500 rounded-full"></div>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white" data-key="how_title">ක්‍රියාකාරීත්වය: Neural Networks</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass p-8 rounded-3xl chapter-card">
+                        <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-sign-in-alt"></i></div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-key="input_title">Input Layer</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-key="input_desc">බාහිර ලෝකයෙන් දත්ත ලබා ගනී (පින්තූර, හඬ හෝ පෙළ).</p>
+                    </div>
+                    <div class="glass p-8 rounded-3xl chapter-card border-green-500/20">
+                        <div class="w-14 h-14 bg-green-500/10 text-green-500 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-layer-group"></i></div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-key="hidden_title">Hidden Layers</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-key="hidden_desc">දත්ත විශ්ලේෂණය කර රටාවන් හඳුනා ගනී. මෙහිදී ගණිතමය ගණනය කිරීම් දහස් ගණනක් සිදුවේ.</p>
+                    </div>
+                    <div class="glass p-8 rounded-3xl chapter-card border-blue-500/20">
+                        <div class="w-14 h-14 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-sign-out-alt"></i></div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-key="output_title">Output Layer</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-key="output_desc">ලබාගත් දත්ත වලට අනුව වඩාත් නිවැරදි අනාවැකිය ලබා දෙයි.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="anthropic" class="mb-20 bg-blue-900/20 p-6 md:p-10 rounded-[2.5rem] border border-blue-500/20">
+                <div class="flex flex-col md:flex-row items-start md:items-center mb-8 gap-4">
+                    <div class="bg-blue-600 text-white p-4 rounded-2xl shadow-lg shadow-blue-600/30"><i class="fas fa-shield-alt text-2xl"></i></div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white" data-key="anthropic_title">Anthropic AI & Vulnerability Analysis</h3>
+                </div>
+                <p class="mb-8 leading-relaxed text-slate-300 text-lg" data-key="anthropic_desc">
+                    Anthropic විසින් නිර්මාණය කළ <b>Claude</b> මාදිලිය සුවිශේෂී වන්නේ එහි ඇති ආරක්ෂිත ප්‍රවේශය නිසාවෙනි. මෙහි ඇති <b>Vulnerability Analysis</b> හැකියාව මෘදුකාංග සිදුරු (Bugs) හඳුනා ගැනීමට මනා සහායක් ලබා දෙයි.
+                </p>
+                <div class="bg-slate-900/50 p-6 md:p-8 rounded-3xl border border-red-500/30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-bug text-6xl text-red-500"></i></div>
+                    <h4 class="font-bold text-red-400 mb-3 flex items-center gap-2" data-key="vuln_title">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        Vulnerability Detection
+                    </h4>
+                    <p class="text-slate-400 text-sm md:text-base" data-key="vuln_desc">Anthropic AI මගින් කේතයක ඇති ආරක්ෂක සිදුරු (SQL Injection, Buffer Overflows) ස්වයංක්‍රීයව හඳුනාගෙන ඒවා නිවැරදි කරන ආකාරය පෙන්වා දෙයි.</p>
+                </div>
+            </section>
+
+            <section id="russia" class="mb-20">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-10 w-2 bg-red-500 rounded-full"></div>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white" data-key="russia_title">රුසියාවේ AI විප්ලවය (Yandex)</h3>
+                </div>
+                <div class="glass p-8 rounded-[2rem] border-red-500/10">
+                    <p class="leading-relaxed text-slate-300 text-lg" data-key="russia_desc">
+                        රුසියාවේ <b>Yandex</b> පද්ධතිය රුසියානු භාෂාව සඳහා විශේෂිත වූ <b>YandexGPT</b> හරහා දේශීය තාක්ෂණය ස්වාධීන කර ඇත. Alice සහ Rover රොබෝවරුන් මගින් භෞතික ලෝකය හා AI සම්බන්ධ වන ආකාරය දැකගත හැක.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cybersecurity" class="mb-20 bg-slate-900 border border-slate-800 text-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-600/10 blur-3xl"></div>
+                <h3 class="text-2xl md:text-4xl font-bold mb-10 flex items-center gap-4" data-key="cyber_title">
+                    <i class="fas fa-user-secret text-red-500"></i> AI & Cybersecurity
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="border border-green-500/20 p-8 rounded-3xl bg-green-500/5 hover:bg-green-500/10 transition-colors">
+                        <h4 class="text-green-400 font-bold mb-4 text-xl flex items-center gap-2" data-key="defensive_title">
+                            <i class="fas fa-shield-halved"></i> Defensive AI
+                        </h4>
+                        <p class="text-slate-400 leading-relaxed" data-key="defensive_desc">හඳුනාගත නොහැකි Malware සහ Phishing ප්‍රහාර AI මගින් ස්වයංක්‍රීයව වළක්වයි.</p>
+                    </div>
+                    <div class="border border-red-500/20 p-8 rounded-3xl bg-red-500/5 hover:bg-red-500/10 transition-colors">
+                        <h4 class="text-red-400 font-bold mb-4 text-xl flex items-center gap-2" data-key="offensive_title">
+                            <i class="fas fa-bolt"></i> Offensive AI
+                        </h4>
+                        <p class="text-slate-400 leading-relaxed" data-key="offensive_desc">Deepfakes සහ දියුණු Hacking මෙවලම් සෑදීමට දුෂ්ට හැකර්වරුන් AI භාවිතා කරයි.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prompting" class="mb-20">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-10 w-2 bg-amber-500 rounded-full"></div>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white" data-key="prompt_title">Prompt Engineering Masterclass</h3>
+                </div>
+                
+                <div class="glass p-8 rounded-[2rem] border-amber-500/10 mb-8">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4" data-key="prompt_desc">Prompt Engineering කියන්නේ AI පද්ධතිවලට අපි දෙන උපදෙස් (Instructions) නිවැරදිව සැලසුම් කරන කලාවයි. AI එක <b>"හිතන්නේ"</b> නැහැ, ඒක කරන්නේ දත්ත මත පදනම්ව ඊළඟට එන දේ <b>අනුමාන (Guess)</b> කරන එකයි.</p>
+                    <p class="font-bold text-amber-500 text-xl" data-key="prompt_highlight">Better Prompt = Better Output 🔥</p>
+                </div>
+
+                <div class="bg-indigo-600/10 p-8 rounded-[2rem] border border-indigo-500/20 mb-10">
+                    <h4 class="font-bold text-indigo-300 mb-6 uppercase tracking-widest text-xs flex items-center gap-2" data-key="framework_title">
+                        <i class="fas fa-th-large"></i> Prompt Structure Framework
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg">
+                            <span class="font-bold text-blue-400 block mb-1" data-key="obj_label">1. Objective:</span> <span class="text-slate-400" data-key="obj_desc">ඔයාට ඕනේ මොකක්ද?</span>
+                        </div>
+                        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg">
+                            <span class="font-bold text-blue-400 block mb-1" data-key="ctx_label">2. Context:</span> <span class="text-slate-400" data-key="ctx_desc">AI එකට පසුබිම කියන්න.</span>
+                        </div>
+                        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg">
+                            <span class="font-bold text-blue-400 block mb-1" data-key="ins_label">3. Instructions:</span> <span class="text-slate-400" data-key="ins_desc">කොහොම explain කරන්නද?</span>
+                        </div>
+                        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg">
+                            <span class="font-bold text-blue-400 block mb-1" data-key="fmt_label">4. Format:</span> <span class="text-slate-400" data-key="fmt_desc">Output එකේ හැඩය (Table/List).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="font-bold mb-6 text-2xl text-white" data-key="types_title">Prompt Types</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800">
+                        <h5 class="font-bold text-blue-400 mb-2">Zero-shot</h5>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-key="zero_desc">උදාහරණ නැතිව කෙලින්ම විධානය දීම. (e.g., "Explain Blockchain")</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800">
+                        <h5 class="font-bold text-blue-400 mb-2">Few-shot</h5>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-key="few_desc">උදාහරණ කිහිපයක් දී AI එකට රටාව (Pattern) කියා දීම.</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800">
+                        <h5 class="font-bold text-blue-400 mb-2">Chain-of-Thought</h5>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-key="chain_desc">AI එකට "පියවරෙන් පියවර හිතන්න" කියා දීම.</p>
+                    </div>
+                </div>
+
+                <div class="pro-tip p-8 rounded-3xl mb-10 shadow-lg bg-amber-500/5">
+                    <h4 class="font-bold text-amber-500 mb-4 flex items-center gap-2" data-key="tips_title">
+                        <i class="fas fa-lightbulb"></i> Advanced Pro Tips
+                    </h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex gap-3 text-sm md:text-base"><i class="fas fa-check text-amber-500 mt-1"></i> <span data-key="tip1"><b>Role-based prompting:</b> AI එකට චරිතයක් ලබා දෙන්න.</span></li>
+                        <li class="flex gap-3 text-sm md:text-base"><i class="fas fa-check text-amber-500 mt-1"></i> <span data-key="tip2"><b>Constraints:</b> සීමාවන් පනවන්න. (e.g., "In under 200 words")</span></li>
+                        <li class="flex gap-3 text-sm md:text-base"><i class="fas fa-check text-amber-500 mt-1"></i> <span data-key="tip3"><b>Iterative Prompting:</b> පළමු උත්තරයෙන් නතර නොවී එය තවදුරටත් refine කරන්න.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-red-500/10 p-6 rounded-2xl border border-red-500/20">
+                    <h4 class="font-bold text-red-400 mb-2 flex items-center gap-2" data-key="mistake_title">
+                        <i class="fas fa-exclamation-triangle"></i> Common Mistakes
+                    </h4>
+                    <p class="text-sm text-red-300/80 italic" data-key="mistake_desc">AI එක Psychic (සිත කියවිය හැකි) කෙනෙක් නෙමෙයි. තොරතුරු අඩුවෙන් දීම සහ පැහැදිලි නැති වීම නිසා වැරදි ප්‍රතිඵල ලැබේ.</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="mt-24 py-12 border-t border-slate-800 text-center">
+                <div class="flex justify-center gap-6 mb-8">
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="https://github.com/Shenolperera" target="_blank" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-github text-xl"></i></a>
+                    <a href="https://www.linkedin.com/in/shenol-perera-17b1b3259/" target="_blank" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+                </div>
+                <p class="text-slate-500 text-sm">
+                    <span data-key="footer_text">Developed By</span> 
+                    <a href="https://shenolperera.wuaze.com/" class="text-blue-500 font-bold hover:text-blue-400 transition-colors" target="_blank">Shenol Perera</a>
+                </p>
+                <p class="text-[10px] text-slate-700 uppercase tracking-widest mt-4 font-bold">Encrypted Connection Secure</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <button id="scroll-top" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-600/40 cursor-pointer z-50 transition-all active:scale-95 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const translations = {
+            si: {
+                nav_title: "පරිච්ඡේද",
+                nav_intro: "හැඳින්වීම",
+                nav_how: "ක්‍රියාකාරීත්වය",
+                nav_anthropic: "Anthropic & Security",
+                nav_russia: "AI in Russia",
+                nav_cyber: "Cybersecurity",
+                nav_prompt: "Prompt Engineering",
+                ai_res_title: "ප්‍රසිද්ධ AI මෙවලම්",
+                hero_title: "කෘතිම බුද්ධිය (AI) යනු කුමක්ද?",
+                hero_desc: "AI යනු හුදෙක් පරිගණක වැඩසටහනක් නොව, මානුෂීය තර්කනය යන්ත්‍රයක් තුළ ප්‍රතිනිර්මාණය කිරීමේ විද්‍යාවයි. සාම්ප්‍රදායික Programming වලදී අපි විධාන ලබා දෙන අතර, AI වලදී පද්ධතිය දත්ත ඇසුරෙන් තනිවම ඉගෙන ගනී.",
+                how_title: "ක්‍රියාකාරීත්වය: Neural Networks",
+                input_title: "Input Layer",
+                input_desc: "බාහිර ලෝකයෙන් දත්ත ලබා ගනී (පින්තූර, හඬ හෝ පෙළ).",
+                hidden_title: "Hidden Layers",
+                hidden_desc: "දත්ත විශ්ලේෂණය කර රටාවන් හඳුනා ගනී. මෙහිදී ගණිතමය ගණනය කිරීම් දහස් ගණනක් සිදුවේ.",
+                output_title: "Output Layer",
+                output_desc: "ලබාගත් දත්ත වලට අනුව වඩාත් නිවැරදි අනාවැකිය ලබා දෙයි.",
+                anthropic_title: "Anthropic AI & Vulnerability Analysis",
+                anthropic_desc: "Anthropic විසින් නිර්මාණය කළ Claude මාදිලිය සුවිශේෂී වන්නේ එහි ඇති ආරක්ෂිත ප්‍රවේශය නිසාවෙනි. මෙහි ඇති Vulnerability Analysis හැකියාව මෘදුකාංග සිදුරු (Bugs) හඳුනා ගැනීමට මනා සහායක් ලබා දෙයි.",
+                vuln_title: "Vulnerability Detection",
+                vuln_desc: "Anthropic AI මගින් කේතයක ඇති ආරක්ෂක සිදුරු (SQL Injection, Buffer Overflows) ස්වයංක්‍රීයව හඳුනාගෙන ඒවා නිවැරදි කරන ආකාරය පෙන්වා දෙයි.",
+                russia_title: "රුසියාවේ AI විප්ලවය (Yandex)",
+                russia_desc: "රුසියාවේ Yandex පද්ධතිය රුසියානු භාෂාව සඳහා විශේෂිත වූ YandexGPT හරහා දේශීය තාක්ෂණය ස්වාධීන කර ඇත. Alice සහ Rover රොබෝවරුන් මගින් භෞතික ලෝකය හා AI සම්බන්ධ වන ආකාරය දැකගත හැක.",
+                cyber_title: "AI & Cybersecurity",
+                defensive_title: "Defensive AI (පලිහක් ලෙස)",
+                defensive_desc: "හඳුනාගත නොහැකි Malware සහ Phishing ප්‍රහාර AI මගින් ස්වයංක්‍රීයව වළක්වයි.",
+                offensive_title: "Offensive AI (ආයුධයක් ලෙස)",
+                offensive_desc: "Deepfakes සහ දියුණු Hacking මෙවලම් සෑදීමට දුෂ්ට හැකර්වරුන් AI භාවිතා කරයි.",
+                prompt_title: "Prompt Engineering Masterclass",
+                prompt_desc: "Prompt Engineering කියන්නේ AI පද්ධතිවලට අපි දෙන උපදෙස් (Instructions) නිවැරදිව සැලසුම් කරන කලාවයි. AI එක 'හිතන්නේ' නැහැ, ඒක කරන්නේ දත්ත මත පදනම්ව ඊළඟට එන දේ අනුමාන (Guess) කරන එකයි.",
+                prompt_highlight: "Better Prompt = Better Output 🔥",
+                framework_title: "Prompt Structure Framework",
+                obj_label: "1. Objective:",
+                obj_desc: "ඔයාට ඕනේ මොකක්ද?",
+                ctx_label: "2. Context:",
+                ctx_desc: "AI එකට පසුබිම කියන්න.",
+                ins_label: "3. Instructions:",
+                ins_desc: "කොහොම explain කරන්නද?",
+                fmt_label: "4. Format:",
+                fmt_desc: "Output එකේ හැඩය (Table/List).",
+                types_title: "Prompt Types",
+                zero_desc: "උදාහරණ නැතිව කෙලින්ම විධානය දීම. (e.g., 'Explain Blockchain')",
+                few_desc: "උදාහරණ කිහිපයක් දී AI එකට රටාව (Pattern) කියා දීම.",
+                chain_desc: "AI එකට 'පියවරෙන් පියවර හිතන්න' කියා දීම.",
+                tips_title: "Advanced Pro Tips",
+                tip1: "Role-based prompting: AI එකට චරිතයක් ලබා දෙන්න.",
+                tip2: "Constraints: සීමාවන් පනවන්න. (e.g., 'In under 200 words')",
+                tip3: "Iterative Prompting: පළමු උත්තරයෙන් නතර නොවී එය තවදුරටත් refine කරන්න.",
+                mistake_title: "Common Mistakes",
+                mistake_desc: "AI එක Psychic (සිත කියවිය හැකි) කෙනෙක් නෙමෙයි. තොරතුරු අඩුවෙන් දීම සහ පැහැදිලි නැති වීම නිසා වැරදි ප්‍රතිඵල ලැබේ.",
+                footer_text: "නිර්මාණය"
+            },
+            en: {
+                nav_title: "Chapters",
+                nav_intro: "Introduction",
+                nav_how: "How it Works",
+                nav_anthropic: "Anthropic & Security",
+                nav_russia: "AI in Russia",
+                nav_cyber: "Cybersecurity",
+                nav_prompt: "Prompt Engineering",
+                ai_res_title: "Famous AI Tools",
+                hero_title: "What is AI?",
+                hero_desc: "AI is not just a computer program, it is the science of recreating human logic within a machine. In traditional programming, we give commands, but in AI, the system learns on its own from data.",
+                how_title: "Neural Networks",
+                input_title: "Input Layer",
+                input_desc: "Receives data from the outside world (images, voice, or text).",
+                hidden_title: "Hidden Layers",
+                hidden_desc: "Analyzes data and recognizes patterns. Thousands of mathematical calculations take place here.",
+                output_title: "Output Layer",
+                output_desc: "Provides the most accurate prediction based on the data received.",
+                anthropic_title: "Anthropic AI Analysis",
+                anthropic_desc: "The Claude model created by Anthropic is unique due to its secure approach. Its Vulnerability Analysis capability identifies software bugs efficiently.",
+                vuln_title: "Vulnerability Detection",
+                vuln_desc: "Anthropic AI automatically identifies security holes like SQL Injection and Buffer Overflows and shows fixes.",
+                russia_title: "Yandex AI Revolution",
+                russia_desc: "Russia's Yandex system has localized technology through YandexGPT. Alice and Rover robots show how the physical world and AI connect.",
+                cyber_title: "AI & Cybersecurity",
+                defensive_title: "Defensive AI",
+                defensive_desc: "AI automatically prevents undetectable malware and phishing attacks.",
+                offensive_title: "Offensive AI",
+                offensive_desc: "Malicious hackers use AI to create Deepfakes and advanced hacking tools.",
+                prompt_title: "Prompt Engineering",
+                prompt_desc: "Prompt Engineering is the art of precisely designing instructions for AI systems. AI guesses the next outcome based on data patterns.",
+                prompt_highlight: "Better Prompt = Better Output 🔥",
+                framework_title: "Prompt Structure",
+                obj_label: "1. Objective:",
+                obj_desc: "What is your goal?",
+                ctx_label: "2. Context:",
+                ctx_desc: "Provide background info.",
+                ins_label: "3. Instructions:",
+                ins_desc: "Specify how to explain.",
+                fmt_label: "4. Format:",
+                fmt_desc: "Desired output format.",
+                types_title: "Prompt Types",
+                zero_desc: "Direct command without examples.",
+                few_desc: "Providing a few examples to show the AI the pattern.",
+                chain_desc: "Telling the AI to 'think step by step'.",
+                tips_title: "Advanced Pro Tips",
+                tip1: "Role-based prompting: Give AI a persona.",
+                tip2: "Constraints: Set limits like 'under 100 words'.",
+                tip3: "Iterative Prompting: Refine results through follow-up prompts.",
+                mistake_title: "Common Mistakes",
+                mistake_desc: "AI is not psychic. Vague prompts lead to hallucinated or incorrect outputs.",
+                footer_text: "Developed By"
+            },
+            ru: {
+                nav_title: "Главы",
+                nav_intro: "Введение",
+                nav_how: "Как это работает",
+                nav_anthropic: "Anthropic и безопасность",
+                nav_russia: "ИИ в России",
+                nav_cyber: "Кибербезопасность",
+                nav_prompt: "Промпт-инжиниринг",
+                ai_res_title: "Популярные ИИ",
+                hero_title: "Что такое ИИ?",
+                hero_desc: "ИИ — это наука о воссоздании человеческой логики в машине.",
+                how_title: "Нейронные сети",
+                input_title: "Входной слой",
+                input_desc: "Получает данные из внешнего мира.",
+                hidden_title: "Скрытые слои",
+                hidden_desc: "Анализирует данные и распознает закономерности.",
+                output_title: "Выходной слой",
+                output_desc: "Дает наиболее точный прогноз.",
+                anthropic_title: "Анализ Anthropic AI",
+                anthropic_desc: "Claude от Anthropic уникален своим безопасным подходом.",
+                vuln_title: "Обнаружение уязвимостей",
+                vuln_desc: "Anthropic AI находит дыры в защите.",
+                russia_title: "ИИ в Яндексе",
+                russia_desc: "Яндекс локализовал технологии через YandexGPT.",
+                cyber_title: "ИИ и безопасность",
+                defensive_title: "Оборонительный ИИ",
+                defensive_desc: "Предотвращает атаки вредоносного ПО.",
+                offensive_title: "Наступательный ИИ",
+                offensive_desc: "Используется для создания дипфейков.",
+                prompt_title: "Промпт-инжиниринг",
+                prompt_desc: "Искусство проектирования инструкций для ИИ.",
+                prompt_highlight: "Лучше промпт = Лучше результат 🔥",
+                framework_title: "Структура промпта",
+                obj_label: "1. Цель:",
+                obj_desc: "Какова ваша цель?",
+                ctx_label: "2. Контекст:",
+                ctx_desc: "Предоставьте информацию.",
+                ins_label: "3. Инструкции:",
+                ins_desc: "Как объяснять.",
+                fmt_label: "4. Формат:",
+                fmt_desc: "Формат вывода.",
+                types_title: "Типы промптов",
+                zero_desc: "Прямая команда.",
+                few_desc: "Примеры для обучения.",
+                chain_desc: "Думать шаг за шагом.",
+                tips_title: "Советы профи",
+                tip1: "Дайте ИИ роль.",
+                tip2: "Установите лимиты слов.",
+                tip3: "Улучшайте результат итерациями.",
+                mistake_title: "Частые ошибки",
+                mistake_desc: "Неясные промпты ведут к галлюцинациям.",
+                footer_text: "Разработано"
+            },
+            fr: {
+                nav_title: "Chapitres",
+                nav_intro: "Introduction",
+                nav_how: "Fonctionnement",
+                nav_anthropic: "Anthropic & Sécurité",
+                nav_russia: "L'IA en Russie",
+                nav_cyber: "Cybersécurité",
+                nav_prompt: "Ingénierie de Prompt",
+                ai_res_title: "Outils IA Célèbres",
+                hero_title: "Qu'est-ce que l'IA ?",
+                hero_desc: "L'IA est la science de recréer la logique humaine.",
+                how_title: "Réseaux de Neurones",
+                input_title: "Couche d'Entrée",
+                input_desc: "Reçoit des données du monde.",
+                hidden_title: "Couches Cachées",
+                hidden_desc: "Analyse les données et motifs.",
+                output_title: "Couche de Sortie",
+                output_desc: "Fournit la prédiction précise.",
+                anthropic_title: "Analyse Anthropic AI",
+                anthropic_desc: "Claude est unique par son approche sécurisée.",
+                vuln_title: "Détection de Failles",
+                vuln_desc: "Identifie les failles de sécurité.",
+                russia_title: "Révolution Yandex",
+                russia_desc: "YandexGPT a localisé la technologie.",
+                cyber_title: "IA & Sécurité",
+                defensive_title: "IA Défensive",
+                defensive_desc: "Prévient les malwares.",
+                offensive_title: "IA Offensive",
+                offensive_desc: "Utilisée pour les Deepfakes.",
+                prompt_title: "Ingénierie de Prompt",
+                prompt_desc: "L'art de concevoir des instructions.",
+                prompt_highlight: "Meilleur Prompt = Meilleur Résultat 🔥",
+                framework_title: "Structure du Prompt",
+                obj_label: "1. Objectif :",
+                obj_desc: "Quel est votre but ?",
+                ctx_label: "2. Contexte :",
+                ctx_desc: "Donnez des infos.",
+                ins_label: "3. Instructions :",
+                ins_desc: "Comment expliquer.",
+                fmt_label: "4. Format :",
+                fmt_desc: "Format de sortie.",
+                types_title: "Types de Prompts",
+                zero_desc: "Commande sans exemple.",
+                few_desc: "Donner des exemples.",
+                chain_desc: "Réfléchir étape par étape.",
+                tips_title: "Conseils Pro",
+                tip1: "Donnez une personnalité.",
+                tip2: "Fixez des limites de mots.",
+                tip3: "Affinez les résultats.",
+                mistake_title: "Erreurs Communes",
+                mistake_desc: "Des prompts vagues mènent à l'erreur.",
+                footer_text: "Développé Par"
+            }
+        };
+
+        const langSelector = document.getElementById('langSelector');
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+        
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) toggleSidebar();
+            });
+        });
+
+        function updateLanguage(lang) {
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (translations[lang][key].includes('<') || translations[lang][key].includes('<b>')) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.innerText = translations[lang][key];
+                    }
+                }
+            });
+            document.documentElement.lang = lang;
+        }
+
+        langSelector.addEventListener('change', (e) => updateLanguage(e.target.value));
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.remove('opacity-0', 'invisible');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'invisible');
+            }
+
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-link');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+        updateLanguage('si');
+    </script>
+
+</body>
+</html>
